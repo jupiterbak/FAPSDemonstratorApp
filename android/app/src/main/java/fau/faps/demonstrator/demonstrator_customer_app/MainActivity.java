@@ -1,4 +1,4 @@
-package fau.faps.demonstrator.faps_demonstrator_customer_app;
+package fau.faps.demonstrator.demonstrator_customer_app;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

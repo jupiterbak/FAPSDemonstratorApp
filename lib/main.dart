@@ -3,9 +3,9 @@ import 'HomeScreen.dart';
 import 'SplashScreen.dart';
 import 'NewOrderScreen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(FAPSDemonstratorApp());
 
-class MyApp extends StatelessWidget {
+class FAPSDemonstratorApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

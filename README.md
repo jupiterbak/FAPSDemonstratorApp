@@ -1,6 +1,6 @@
-# faps_demonstrator_customer_app
+# demonstrator_customer_app
 
-FAPS Demonstrator Customer Apps
+Demonstrator Ordering App
 
 ## Getting Started
 

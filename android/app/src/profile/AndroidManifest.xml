@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fau.faps.demonstrator.faps_demonstrator_customer_app">
+    package="fau.faps.demonstrator.demonstrator_customer_app">
     <!-- Flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
     -->
