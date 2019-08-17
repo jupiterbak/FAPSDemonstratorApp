@@ -11,7 +11,7 @@ class NewOrderScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Configure a new order"),
       ),
-      body: myGridView.build(),
+      body: myGridView.build(context),
     );
   }
 }
