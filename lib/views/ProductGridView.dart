@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class MyGridView {
-
-
 
   void _onTileClicked(String item_name, context){
     debugPrint("You selected on item $item_name");
