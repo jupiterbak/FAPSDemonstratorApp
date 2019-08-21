@@ -42,20 +42,25 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     );
   }
 
-  GridView getGridView( BuildContext context) {
+  Widget getGridView( BuildContext context) {
     List<Gift> all_types = Gift.getAllPossibleGifts();
     List<Widget> gridCells = [];
     all_types.forEach((element) => gridCells.add(getStructuredGridCell(element,context)));
 
-    return GridView.count(
-      primary: true,
-      padding: const EdgeInsets.all(8.0),
-      crossAxisCount: 2,
-      childAspectRatio: 0.85,
-      mainAxisSpacing: 1.0,
-      crossAxisSpacing: 1.0,
-      children: gridCells,
-    );
+    return
+      OrientationBuilder(
+          builder: (context, orientation) {
+            return GridView.count(
+              primary: true,
+              padding: const EdgeInsets.all(8.0),
+              crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
+              childAspectRatio: 0.85,
+              mainAxisSpacing: 1.0,
+              crossAxisSpacing: 1.0,
+              children: gridCells,
+            );
+          },
+      );
   }
 
   bool isSelected(Gift gift){
@@ -100,15 +105,24 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
   }
 
   void _onTileClicked(Gift gift, context){
-    String msg = "You selected on item " + gift.name;
-    if(selectedGifts.length >= 4){
-      msg = 'You can only select 4 items!';
-    }
-    if(selectedGifts.length <= 3){
-      setState(() => selectedGifts.add(new Gift(gift.id, gift.name, gift.image, gift.weight, gift.description, gift.totalReviews)));
+    String msg = "";
+    bool isWarning = false;
+    var foundedGifts = this.selectedGifts.where((f) => f.name == gift.name).toList();
+    if(foundedGifts.length> 0){
+      setState(() => selectedGifts.remove(foundedGifts[0]));
+      msg = "Gift \"" + gift.name + "\" has been removed.";
+    }else{
+      if(selectedGifts.length <= 3){
+        setState(() => selectedGifts.add(gift));
+        msg = "You selected on item " + gift.name;
+      }else{
+        isWarning = true;
+        msg = 'You can only select 4 items!';
+      }
     }
     final snackBar = SnackBar(
-      content: Text(msg),
+      backgroundColor: isWarning? Colors.red.withOpacity(0.8): Colors.black.withOpacity(0.5),
+      content: Text(msg,),
       duration: Duration(seconds: 1),
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);

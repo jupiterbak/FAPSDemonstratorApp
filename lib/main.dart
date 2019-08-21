@@ -38,14 +38,10 @@ class FAPSDemonstratorApp extends StatelessWidget {
         const Locale("en", "US"),
         const Locale("de", "DE"),
       ],
+      locale: Locale('en'),
       home: SplashScreen(),
       routes: <String, WidgetBuilder>{
-        HomeScreen.routeName: (BuildContext context) => Container(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(child: Container(child: new HomeScreen(title: 'FAPS Customer Apps'))),
-          ),
-        ),
+        HomeScreen.routeName: (BuildContext context) =>  HomeScreen(title: 'FAPS Customer Apps'),
         NewOrderScreen.routeName: (BuildContext context) => NewOrderScreen(),
       },
     );
