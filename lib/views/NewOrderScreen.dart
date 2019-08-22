@@ -1,3 +1,4 @@
+import 'package:faps_demonstrator_customer_app/model/Order.dart';
 import 'package:faps_demonstrator_customer_app/model/gift.dart';
 import 'package:flutter/material.dart';
 

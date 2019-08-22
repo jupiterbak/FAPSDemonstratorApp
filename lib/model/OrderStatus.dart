@@ -8,6 +8,7 @@ class OrderStatus{
 enum StatusEnum {
   // the enum values
   CREATED,
+  ACCEPTED,
   SCHEDULED,
   IN_PROCESSING,
   ON_DELIVERY,

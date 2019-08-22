@@ -1,3 +1,4 @@
+import 'package:faps_demonstrator_customer_app/views/OrderDetailsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:faps_demonstrator_customer_app/views/HomeScreen.dart';
 import 'package:faps_demonstrator_customer_app/views/SplashScreen.dart';
@@ -43,6 +44,7 @@ class FAPSDemonstratorApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         HomeScreen.routeName: (BuildContext context) =>  HomeScreen(title: 'FAPS Customer Apps'),
         NewOrderScreen.routeName: (BuildContext context) => NewOrderScreen(),
+        OrderDetailsScreen.routeName: (BuildContext context) => OrderDetailsScreen(),
       },
     );
   }

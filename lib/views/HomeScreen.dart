@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:faps_demonstrator_customer_app/model/gift.dart';
+import 'package:faps_demonstrator_customer_app/views/OrderDetailsScreen.dart';
 import 'package:http/http.dart' as http;
 import 'package:faps_demonstrator_customer_app/model/Order.dart';
 import 'package:flutter/material.dart';
@@ -98,6 +99,13 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  void openOrderDetailsView(OrderModel order) {
+    Navigator.of(context).pushNamed(
+      OrderDetailsScreen.routeName,
+      arguments:order
+    );
+  }
+
   void goToCreateNewOrderView() {
     Navigator.of(context).pushNamed(NewOrderScreen.routeName);
   }
@@ -141,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         onTap: () {
-          goToCreateNewOrderView();
+          openOrderDetailsView(order);
         },
       );
 
