@@ -2,7 +2,7 @@ import 'package:faps_demonstrator_customer_app/model/Order.dart';
 import 'package:flutter/material.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
-  static const String routeName = "/order_details";
+  static const String routeName = "/order_details_new";
 
   @override
   OrderDetailsScreenState createState() => OrderDetailsScreenState();

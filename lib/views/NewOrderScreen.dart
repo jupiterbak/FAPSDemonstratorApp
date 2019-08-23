@@ -3,7 +3,7 @@ import 'package:faps_demonstrator_customer_app/model/gift.dart';
 import 'package:flutter/material.dart';
 
 class NewOrderScreen extends StatefulWidget {
-  static const String routeName = "/new_order";
+  static const String routeName = "/addOrder";
 
   @override
   _NewOrderScreenState createState() => _NewOrderScreenState();

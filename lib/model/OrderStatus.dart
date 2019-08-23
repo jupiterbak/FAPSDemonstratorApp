@@ -3,6 +3,19 @@ class OrderStatus{
   DateTime updated;
 
   OrderStatus(this.status, this.updated);
+
+  factory OrderStatus.fromJson(Map<String, dynamic> json) {
+    return OrderStatus(
+        json['status'] as StatusEnum,
+        json['updated'] as DateTime
+    );
+  }
+
+  Map<String, dynamic> toJson() =>
+      {
+        'status': status,
+        'updated': updated,
+      };
 }
 
 enum StatusEnum {

@@ -6,23 +6,46 @@ import 'package:intl/intl.dart';
 class OrderModel {
   DateTime created = DateTime.now();
   DateTime updated = DateTime.now();
-  DateTime lastStatusUpdate;
-  StatusEnum currentOrderStatus;
+  DateTime lastStatusUpdate = DateTime.now();
+  StatusEnum currentOrderStatus = StatusEnum.CREATED;
   String OrderID = "XXXX_XXXX";
   String OrderOwner = "Unknown Customer";
   List<OrderStatus> statusHistory = [];
   List<Gift> gifts = [];
   var formatter = new DateFormat('yyyy-MM-dd hh:mm:ss');
 
-  OrderModel(OrderID, OrderOwner, List<Gift> gifts) {
-    this.updated = DateTime.now();
-    OrderStatus cur = new OrderStatus(StatusEnum.CREATED, DateTime.now());
-    this.statusHistory.add(cur);
-    this.OrderID = OrderID;
-    this.OrderOwner = OrderOwner;
-    this.gifts.addAll(gifts);
-    this.currentOrderStatus = StatusEnum.CREATED;
-  }
+  OrderModel(
+      this.created,
+        this.updated,
+        this.lastStatusUpdate,
+        this.currentOrderStatus,
+        this.OrderID,
+        this.OrderOwner,
+        this.statusHistory,
+        this.gifts);
+
+//  factory OrderModel.fromJson(Map<String, dynamic> json) {
+//    return new OrderModel(
+//        json['created'] as DateTime,
+//        json['updated'] as DateTime,
+//        json['lastStatusUpdate'] as DateTime,
+//        json['currentOrderStatus'] as StatusEnum,
+//        json['OrderID'] as String,
+//        json['OrderOwner'] as String,
+//        json['statusHistory'] as List<OrderStatus>,
+//        json['gifts'] as List<Gift>);
+//  }
+
+  Map<String, dynamic> toJson() => {
+    'created': created,
+    'updated': updated,
+    'lastStatusUpdate': lastStatusUpdate,
+    'currentOrderStatus': currentOrderStatus,
+    'OrderID': OrderID,
+    'OrderOwner': OrderOwner,
+    'statusHistory': statusHistory,
+    'gifts': gifts
+  };
 
   int get totalQuantity => gifts.length;
 
@@ -128,7 +151,6 @@ class OrderModel {
       getOnDeliveryStatusStepView(), // ON_DELIVERY
       getDELIVEREDStatusStepView(), // DELIVERED
       getFINISHEDStatusStepView() // FINISHED
-
     ];
   }
 
@@ -141,22 +163,23 @@ class OrderModel {
           subtitle: Text(
               formatter.format(current_step.updated) + " - " + this.OrderOwner),
           // Content, it can be any widget here. Using basic Text for this example
-          content: gifts.length > 0?
-          Column(
+          content: gifts.length > 0
+              ? Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text("OrderID: " + this.OrderID),
               Text("Owner: " + this.OrderOwner != null &&
                   !this.OrderOwner.isEmpty
-                  ? this.OrderOwner : "Unknown"),
+                  ? this.OrderOwner
+                  : "Unknown"),
               Text("Status Update: " +
                   formatter.format(current_step.updated)),
               Text("Product configuration:"),
               getGiftsImages(),
             ],
-          ):
-          Column(
+          )
+              : Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -164,7 +187,7 @@ class OrderModel {
             ],
           ),
           isActive: true,
-          state: gifts.length > 0? StepState.complete:StepState.disabled);
+          state: gifts.length > 0 ? StepState.complete : StepState.disabled);
     } else {
       return Step(
         // Title of the Step
@@ -178,7 +201,6 @@ class OrderModel {
   }
 
   Step getAcceptedStatusStepView() {
-
     return Step(
       // Title of the Step
         title: Text("ACCEPTED"),
@@ -187,12 +209,10 @@ class OrderModel {
         content: Text("Current step visualization is not implemented."
             "Please report this error to jupiter Bakakeu."),
         isActive: true,
-        state: StepState.editing
-    );
+        state: StepState.editing);
   }
 
   Step getScheduledStatusStepView() {
-
     return Step(
       // Title of the Step
         title: Text("SCHEDULED"),
@@ -201,12 +221,10 @@ class OrderModel {
         content: Text("Current step visualization is not implemented."
             "Please report this error to jupiter Bakakeu."),
         isActive: true,
-        state: StepState.editing
-    );
+        state: StepState.editing);
   }
 
   Step getInProcessingStatusStepView() {
-
     return Step(
       // Title of the Step
         title: Text("IN PROCESSING"),
@@ -215,12 +233,10 @@ class OrderModel {
         content: Text("Current step visualization is not implemented."
             "Please report this error to jupiter Bakakeu."),
         isActive: true,
-        state: StepState.editing
-    );
+        state: StepState.editing);
   }
 
   Step getOnDeliveryStatusStepView() {
-
     return Step(
       // Title of the Step
         title: Text("ON DELIVERY"),
@@ -229,12 +245,10 @@ class OrderModel {
         content: Text("Current step visualization is not implemented."
             "Please report this error to jupiter Bakakeu."),
         isActive: true,
-        state: StepState.editing
-    );
+        state: StepState.editing);
   }
 
   Step getDELIVEREDStatusStepView() {
-
     return Step(
       // Title of the Step
         title: Text("DELIVERED"),
@@ -243,12 +257,10 @@ class OrderModel {
         content: Text("Current step visualization is not implemented."
             "Please report this error to jupiter Bakakeu."),
         isActive: true,
-        state: StepState.editing
-    );
+        state: StepState.editing);
   }
 
   Step getFINISHEDStatusStepView() {
-
     return Step(
       // Title of the Step
         title: Text("DELIVERED"),
@@ -257,12 +269,10 @@ class OrderModel {
         content: Text("Current step visualization is not implemented."
             "Please report this error to jupiter Bakakeu."),
         isActive: true,
-        state: StepState.editing
-    );
+        state: StepState.editing);
   }
 
   Step getNotConfiguredStepView() {
-
     return Step(
       // Title of the Step
         title: Text("Not implemented."),
@@ -271,37 +281,29 @@ class OrderModel {
         content: Text("Current step visualization is not implemented."
             "Please report this error to jupiter Bakakeu."),
         isActive: true,
-        state: StepState.editing
-    );
+        state: StepState.editing);
   }
 
   getGiftsImages() {
     List<Expanded> imgs = [];
     for (final x in this.gifts) {
-      imgs.add(
-          Expanded(
-              child:Card(
-                  elevation: 2.0,
-                    child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image(image: AssetImage(x.image),
-                                fit: BoxFit.scaleDown),
-                          ),
-                          Text(
-                              x.name,
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 8,
-                                fontWeight: FontWeight.bold,
-                              )
-                          ),
-                        ]),
-                  )
-              )
-      );
+      imgs.add(Expanded(
+          child: Card(
+            elevation: 2.0,
+            child: Column(children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image(image: AssetImage(x.image), fit: BoxFit.scaleDown),
+              ),
+              Text(x.name,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 8,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ]),
+          )));
     }
 
     return Row(

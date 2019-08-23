@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:faps_demonstrator_customer_app/model/OrderStatus.dart';
 import 'package:faps_demonstrator_customer_app/model/gift.dart';
 import 'package:faps_demonstrator_customer_app/views/OrderDetailsScreen.dart';
 import 'package:http/http.dart' as http;
@@ -44,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const fiveSeconds = const Duration(seconds: 5);
     _timer = Timer.periodic(
       fiveSeconds,
-          (Timer t) => _refresh(),
+      (Timer t) => _refresh(),
     );
   }
 
@@ -59,36 +60,62 @@ class _HomeScreenState extends State<HomeScreen> {
     final response = await http.get("http://fluttericon.com/");
     if (response.statusCode == 200) {
       return refreshDataOrders(response.body);
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load post');
     }
-    return null;
   }
 
   List<OrderModel> refreshDataOrders(String body) {
     return [
-      new OrderModel(randomAlphaNumeric(10), "jupiter.bakakeu@faps.de", [
+      new OrderModel(
+          DateTime.now(),
+          DateTime.now(),
+          DateTime.now(),
+          StatusEnum.CREATED,
+          randomAlphaNumeric(10),
+          "jupiter.bakakeu@faps.de", [], [
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
       ]),
-      new OrderModel(randomAlphaNumeric(10), "jupiter.bakakeu@faps.de", [
+      new OrderModel(
+          DateTime.now(),
+          DateTime.now(),
+          DateTime.now(),
+          StatusEnum.CREATED,
+          randomAlphaNumeric(10),
+          "jupiter.bakakeu@faps.de", [], [
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
       ]),
-      new OrderModel(randomAlphaNumeric(10), "jupiter.bakakeu@faps.de", [
+      new OrderModel(
+          DateTime.now(),
+          DateTime.now(),
+          DateTime.now(),
+          StatusEnum.CREATED,
+          randomAlphaNumeric(10),
+          "jupiter.bakakeu@faps.de", [], [
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
       ]),
-      new OrderModel(randomAlphaNumeric(10), "jupiter.bakakeu@faps.de", [
+      new OrderModel(
+          DateTime.now(),
+          DateTime.now(),
+          DateTime.now(),
+          StatusEnum.CREATED,
+          randomAlphaNumeric(10),
+          "jupiter.bakakeu@faps.de", [], [
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-      ])
+      ]),
     ];
   }
 
@@ -100,10 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void openOrderDetailsView(OrderModel order) {
-    Navigator.of(context).pushNamed(
-      OrderDetailsScreen.routeName,
-      arguments:order
-    );
+    Navigator.of(context)
+        .pushNamed(OrderDetailsScreen.routeName, arguments: order);
   }
 
   void goToCreateNewOrderView() {
@@ -120,7 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
             order.getSubText(),
           ],
         ),
-
         subtitle: Row(
           children: <Widget>[
             Expanded(
@@ -129,8 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: LinearProgressIndicator(
                   backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
                   value: order.getStatusIndicator(),
-                  valueColor:
-                  AlwaysStoppedAnimation(order.getStatusColor()),
+                  valueColor: AlwaysStoppedAnimation(order.getStatusColor()),
                 ),
               ),
             ),
@@ -144,9 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         trailing: Column(
-          children: <Widget>[
-            order.getItemCounts()
-          ],
+          children: <Widget>[order.getItemCounts()],
         ),
         onTap: () {
           openOrderDetailsView(order);
@@ -157,26 +178,25 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(widget.title),
+        title: Text(widget.title),
       ),
       body: RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: _refresh,
           child: SafeArea(
               child: Container(
-                  child: (_orders.isNotEmpty) ? ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: _orders.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return makeCard(_orders[index]);
-                    },
-                  ) : Center(
-                    child: CircularProgressIndicator(),
-                  )
-              )
-          )
-      ),
+                  child: (_orders.isNotEmpty)
+                      ? ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: _orders.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return makeCard(_orders[index]);
+                          },
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        )))),
       drawer: getNavDrawer(context),
       floatingActionButton: FloatingActionButton(
         onPressed: goToCreateNewOrderView,
@@ -201,16 +221,19 @@ class _HomeScreenState extends State<HomeScreen> {
     var headerChild = DrawerHeader(
         child: new Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Image.asset(
-                  'assets/images/FAPS_Logo_scaled.PNG',
-                )
-              ],
-            )));
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        new Image.asset(
+          'assets/images/FAPS_Logo_scaled.PNG',
+        )
+      ],
+    )));
 
     var aboutChild = AboutListTile(
-        child: Text("About",style: TextStyle(color: Colors.black54),),
+        child: Text(
+          "About",
+          style: TextStyle(color: Colors.black54),
+        ),
         applicationName: "FAPS Demonstrator Customer Application",
         applicationVersion: "v1.0.0",
         applicationIcon: Icon(Icons.adb),
@@ -219,7 +242,10 @@ class _HomeScreenState extends State<HomeScreen> {
     ListTile getNavItem(var icon, String s, String routeName) {
       return ListTile(
         leading: Icon(icon),
-        title: Text(s , style: TextStyle(color: Colors.black54),),
+        title: Text(
+          s,
+          style: TextStyle(color: Colors.black54),
+        ),
         onTap: () {
           setState(() {
             // pop closes the drawer
@@ -240,7 +266,6 @@ class _HomeScreenState extends State<HomeScreen> {
     ListView listView = ListView(children: myNavChildren);
 
     return Drawer(
-
       child: listView,
     );
   }

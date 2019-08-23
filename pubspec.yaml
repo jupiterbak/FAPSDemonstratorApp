@@ -19,9 +19,9 @@ dependencies:
   flutter_masked_text: ^0.8.0
   random_string: 1.1.0
   intl: 0.15.8
+  flutter_launcher_icons: "^0.7.2"
 
 dev_dependencies:
-  flutter_launcher_icons: "^0.7.2"
   flutter_test:
     sdk: flutter
 
