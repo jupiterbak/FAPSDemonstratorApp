@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:faps_demonstrator_customer_app/model/OrderStatus.dart';
 import 'package:faps_demonstrator_customer_app/model/gift.dart';
 import 'package:faps_demonstrator_customer_app/views/OrderDetailsScreen.dart';
@@ -11,6 +12,8 @@ import 'package:faps_demonstrator_customer_app/views/NewOrderScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/HomeScreen';
+  static const String backendServerAddress = "127.0.0.1";
+  static const int backendServerPort = 3000;
 
   HomeScreen({Key key, this.title}) : super(key: key);
 
@@ -57,9 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List<OrderModel>> _fetchData() async {
-    final response = await http.get("http://fluttericon.com/");
+    final response = await http.get("http://" + HomeScreen.backendServerAddress
+        + ":" + HomeScreen.backendServerPort.toString() +"/orders");
     if (response.statusCode == 200) {
-      return refreshDataOrders(response.body);
+      return OrderModel.getAllfromJson(response.body);
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load post');

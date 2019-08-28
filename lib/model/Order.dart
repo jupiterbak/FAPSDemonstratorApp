@@ -2,6 +2,8 @@ import 'package:faps_demonstrator_customer_app/model/gift.dart';
 import 'package:flutter/material.dart';
 import 'OrderStatus.dart';
 import 'package:intl/intl.dart';
+import 'dart:async';
+import 'dart:convert';
 
 class OrderModel {
   DateTime created = DateTime.now();
@@ -24,17 +26,22 @@ class OrderModel {
         this.statusHistory,
         this.gifts);
 
-//  factory OrderModel.fromJson(Map<String, dynamic> json) {
-//    return new OrderModel(
-//        json['created'] as DateTime,
-//        json['updated'] as DateTime,
-//        json['lastStatusUpdate'] as DateTime,
-//        json['currentOrderStatus'] as StatusEnum,
-//        json['OrderID'] as String,
-//        json['OrderOwner'] as String,
-//        json['statusHistory'] as List<OrderStatus>,
-//        json['gifts'] as List<Gift>);
-//  }
+  factory OrderModel.fromJson(Map<String, dynamic> json) {
+    return new OrderModel(
+        json['created'] as DateTime,
+        json['updated'] as DateTime,
+        json['lastStatusUpdate'] as DateTime,
+        json['currentOrderStatus'] as StatusEnum,
+        json['OrderID'] as String,
+        json['OrderOwner'] as String,
+        json['statusHistory'] as List<OrderStatus>,
+        json['gifts'] as List<Gift>);
+  }
+
+  static List<OrderModel> getAllfromJson(String jsonTxt) {
+    List<dynamic> list = json.decode(jsonTxt);
+    return list.map((val) => OrderModel.fromJson(val)).toList();
+  }
 
   Map<String, dynamic> toJson() => {
     'created': created,
