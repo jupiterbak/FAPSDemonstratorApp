@@ -12,8 +12,8 @@ import 'package:faps_demonstrator_customer_app/views/NewOrderScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/HomeScreen';
-  static const String backendServerAddress = "127.0.0.1";
-  static const int backendServerPort = 3000;
+  static const String backendServerAddress = "kain.faps.uni-erlangen.de";
+  static const int backendServerPort = 8080;
 
   HomeScreen({Key key, this.title}) : super(key: key);
 

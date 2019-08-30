@@ -5,12 +5,16 @@ class OrderStatus{
   OrderStatus(this.status, this.updated);
 
   factory OrderStatus.fromJson(Map<String, dynamic> json) {
+    DateTime updated = DateTime.parse(json['updated']);
     return OrderStatus(
         json['status'] as StatusEnum,
-        json['updated'] as DateTime
+        updated
     );
   }
 
+  static StatusEnum parseStatusEnum(String status){
+    return StatusEnum.values.firstWhere((e) => e.toString() == status);
+  }
   Map<String, dynamic> toJson() =>
       {
         'status': status,

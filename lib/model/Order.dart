@@ -27,11 +27,14 @@ class OrderModel {
         this.gifts);
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
+    DateTime created = DateTime.parse(json['created']);
+    DateTime updated = DateTime.parse(json['updated']);
+    DateTime lastStatusUpdate = DateTime.parse(json['lastStatusUpdate']);
     return new OrderModel(
-        json['created'] as DateTime,
-        json['updated'] as DateTime,
-        json['lastStatusUpdate'] as DateTime,
-        json['currentOrderStatus'] as StatusEnum,
+        created,
+        updated,
+        lastStatusUpdate,
+        OrderStatus.parseStatusEnum(json['currentOrderStatus']['status']),
         json['OrderID'] as String,
         json['OrderOwner'] as String,
         json['statusHistory'] as List<OrderStatus>,
