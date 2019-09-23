@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Gift {
   String name;
   int id;
@@ -17,18 +19,18 @@ class Gift {
 
   static getAllPossibleGifts() => <Gift>[
         Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.2, "", 0),
-        Gift(0, "FAU M&Ms", "assets/images/M&Ms.jpg", 0.2, "", 0),
-        Gift(0, "FAU Rubber Eraser", "assets/images/RadierGummi.jpg", 0.2, "",
+        Gift(1, "FAU M&Ms", "assets/images/M&Ms.jpg", 0.2, "", 0),
+        Gift(2, "FAU Rubber Eraser", "assets/images/RadierGummi.jpg", 0.2, "",
             0),
-        Gift(0, "FAU Biscuits", "assets/images/leibniz_keks.jpg", 0.2, "", 0),
-        Gift(0, "FAU USB-Sticks", "assets/images/USB.jpg", 0.2, "", 0),
-        Gift(0, "FAU Mentos Bonbons", "assets/images/Mentos_Neu.jpeg", 0.2, "",
+        Gift(3, "FAU Biscuits", "assets/images/leibniz_keks.jpg", 0.2, "", 0),
+        Gift(4, "FAU USB-Sticks", "assets/images/USB.jpg", 0.2, "", 0),
+        Gift(5, "FAU Mentos Bonbons", "assets/images/Mentos_Neu.jpeg", 0.2, "",
             0),
-        Gift(0, "Post-It", "assets/images/Post_it.jpg", 0.2, "", 0),
-        Gift(0, "FAU Surprise", "assets/images/FAU_blue.jpg", 0.2, "", 0)
+        Gift(6, "Post-It", "assets/images/Post_it.jpg", 0.2, "", 0),
+        Gift(7, "FAU Surprise", "assets/images/FAU_blue.jpg", 0.2, "", 0)
       ];
 
-  factory Gift.fromJson(Map<String, dynamic> json) {
+  static  Gift fromJson(Map<String, dynamic> json) {
     return Gift(
         json['id'] as int,
         json['name'] as String,
@@ -36,6 +38,10 @@ class Gift {
         json['weigth'] as double,
         json['description'] as String,
         json['totalReviews'] as int);
+  }
+
+  static  List<Gift> getAllFromJson(List<dynamic> jsonList) {
+    return jsonList.map((val) => Gift.fromJson(val)).toList();
   }
 
   Map<String, dynamic> toJson() => {

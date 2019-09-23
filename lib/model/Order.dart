@@ -30,15 +30,18 @@ class OrderModel {
     DateTime created = DateTime.parse(json['created']);
     DateTime updated = DateTime.parse(json['updated']);
     DateTime lastStatusUpdate = DateTime.parse(json['lastStatusUpdate']);
-    return new OrderModel(
+    OrderModel rslt = new OrderModel(
         created,
         updated,
         lastStatusUpdate,
         OrderStatus.parseStatusEnum(json['currentOrderStatus']['status']),
-        json['OrderID'] as String,
+        json['_id'] as String,
         json['OrderOwner'] as String,
-        json['statusHistory'] as List<OrderStatus>,
-        json['gifts'] as List<Gift>);
+        OrderStatus.allFromJson(json['statusHistory']),
+        Gift.getAllFromJson(json['gifts'])
+    );
+
+    return rslt;
   }
 
   static List<OrderModel> getAllfromJson(String jsonTxt) {
@@ -169,7 +172,7 @@ class OrderModel {
       OrderStatus current_step = this.statusHistory[0];
       return Step(
         // Title of the Step
-          title: Text("CREATED - OrderID: " + this.OrderID + " created."),
+          title: Text("CREATED"),
           subtitle: Text(
               formatter.format(current_step.updated) + " - " + this.OrderOwner),
           // Content, it can be any widget here. Using basic Text for this example
@@ -186,7 +189,8 @@ class OrderModel {
               Text("Status Update: " +
                   formatter.format(current_step.updated)),
               Text("Product configuration:"),
-              getGiftsImages(),
+              getGiftsImages()
+
             ],
           )
               : Column(
@@ -211,75 +215,153 @@ class OrderModel {
   }
 
   Step getAcceptedStatusStepView() {
-    return Step(
-      // Title of the Step
-        title: Text("ACCEPTED"),
-        subtitle: Text("Current step visualization is not implemented."),
-        // Content, it can be any widget here. Using basic Text for this example
-        content: Text("Current step visualization is not implemented."
-            "Please report this error to jupiter Bakakeu."),
-        isActive: true,
-        state: StepState.editing);
+    var fStatus = this.statusHistory.firstWhere(
+            (status) => status.status == StatusEnum.ACCEPTED, orElse: () => null);
+
+    if(fStatus != null) {
+      return Step(
+        // Title of the Step
+          title: Text("ACCEPTED"),
+          subtitle: Text("Your order has been accepted."),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Your order has been accepted on " + fStatus.updated.toString()),
+          isActive: true,
+          state: StepState.complete);
+    }else{
+      return Step(
+        // Title of the Step
+          title: Text("ACCEPTED"),
+          subtitle: Text("Pending."),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Pending"),
+          isActive: true,
+          state: StepState.editing);
+    }
   }
 
   Step getScheduledStatusStepView() {
-    return Step(
-      // Title of the Step
-        title: Text("SCHEDULED"),
-        subtitle: Text("Current step visualization is not implemented."),
-        // Content, it can be any widget here. Using basic Text for this example
-        content: Text("Current step visualization is not implemented."
-            "Please report this error to jupiter Bakakeu."),
-        isActive: true,
-        state: StepState.editing);
+    var fStatus = this.statusHistory.firstWhere(
+            (status) => status.status == StatusEnum.SCHEDULED, orElse: () => null);
+
+    if(fStatus != null) {
+      return Step(
+        // Title of the Step
+          title: Text("SCHEDULED"),
+          subtitle: Text("Your order is scheduled for production."),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Your order has been scheduled for production on " + fStatus.updated.toString()),
+          isActive: true,
+          state: StepState.complete);
+    }else{
+      return Step(
+        // Title of the Step
+          title: Text("SCHEDULED"),
+          subtitle: Text("Pending."),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Pending"),
+          isActive: true,
+          state: StepState.editing);
+    }
   }
 
   Step getInProcessingStatusStepView() {
-    return Step(
-      // Title of the Step
-        title: Text("IN PROCESSING"),
-        subtitle: Text("Current step visualization is not implemented."),
-        // Content, it can be any widget here. Using basic Text for this example
-        content: Text("Current step visualization is not implemented."
-            "Please report this error to jupiter Bakakeu."),
-        isActive: true,
-        state: StepState.editing);
+    var fStatus = this.statusHistory.firstWhere(
+            (status) => status.status == StatusEnum.IN_PROCESSING, orElse: () => null);
+
+    if(fStatus != null) {
+      return Step(
+        // Title of the Step
+          title: Text("IN_PROCESSING"),
+          subtitle: Text("Your order is curently on processing"),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Your order is beeing processing"),
+          isActive: true,
+          state: StepState.complete);
+    }else{
+      return Step(
+        // Title of the Step
+          title: Text("IN_PROCESSING"),
+          subtitle: Text("Pending."),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Pending"),
+          isActive: true,
+          state: StepState.editing);
+    }
   }
 
   Step getOnDeliveryStatusStepView() {
-    return Step(
-      // Title of the Step
-        title: Text("ON DELIVERY"),
-        subtitle: Text("Current step visualization is not implemented."),
-        // Content, it can be any widget here. Using basic Text for this example
-        content: Text("Current step visualization is not implemented."
-            "Please report this error to jupiter Bakakeu."),
-        isActive: true,
-        state: StepState.editing);
+    var fStatus = this.statusHistory.firstWhere(
+            (status) => status.status == StatusEnum.ON_DELIVERY, orElse: () => null);
+
+    if(fStatus != null) {
+      return Step(
+        // Title of the Step
+          title: Text("ON_DELIVERY"),
+          subtitle: Text("Your order is on delivery."),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Your order is on delivery. Please wait at yout seat."),
+          isActive: true,
+          state: StepState.complete);
+    }else{
+      return Step(
+        // Title of the Step
+          title: Text("ON_DELIVERY"),
+          subtitle: Text("Pending."),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Pending"),
+          isActive: true,
+          state: StepState.editing);
+    }
   }
 
   Step getDELIVEREDStatusStepView() {
-    return Step(
-      // Title of the Step
-        title: Text("DELIVERED"),
-        subtitle: Text("Current step visualization is not implemented."),
-        // Content, it can be any widget here. Using basic Text for this example
-        content: Text("Current step visualization is not implemented."
-            "Please report this error to jupiter Bakakeu."),
-        isActive: true,
-        state: StepState.editing);
+    var fStatus = this.statusHistory.firstWhere(
+            (status) => status.status == StatusEnum.DELIVERED, orElse: () => null);
+
+    if(fStatus != null) {
+      return Step(
+        // Title of the Step
+          title: Text("DELIVERED"),
+          subtitle: Text("Your product has been delivered."),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Your order is completed and delivered. Delivered on: " + fStatus.updated.toString()),
+          isActive: true,
+          state: StepState.complete);
+    }else{
+      return Step(
+        // Title of the Step
+          title: Text("DELIVERED"),
+          subtitle: Text("Pending."),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Pending"),
+          isActive: true,
+          state: StepState.editing);
+    }
   }
 
   Step getFINISHEDStatusStepView() {
-    return Step(
-      // Title of the Step
-        title: Text("DELIVERED"),
-        subtitle: Text("Current step visualization is not implemented."),
-        // Content, it can be any widget here. Using basic Text for this example
-        content: Text("Current step visualization is not implemented."
-            "Please report this error to jupiter Bakakeu."),
-        isActive: true,
-        state: StepState.editing);
+    var fStatus = this.statusHistory.firstWhere(
+            (status) => status.status == StatusEnum.FINISHED, orElse: () => null);
+
+    if(fStatus != null) {
+      return Step(
+        // Title of the Step
+          title: Text("FINISHED"),
+          subtitle: Text("Product Order is completed."),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Your order is completed and delivered. Delivered on: " + fStatus.updated.toString()),
+          isActive: true,
+          state: StepState.complete);
+    }else{
+      return Step(
+        // Title of the Step
+          title: Text("FINISHED"),
+          subtitle: Text("Pending."),
+          // Content, it can be any widget here. Using basic Text for this example
+          content: Text("Pending"),
+          isActive: true,
+          state: StepState.editing);
+    }
   }
 
   Step getNotConfiguredStepView() {
@@ -297,29 +379,75 @@ class OrderModel {
   getGiftsImages() {
     List<Expanded> imgs = [];
     for (final x in this.gifts) {
-      imgs.add(Expanded(
-          child: Card(
-            elevation: 2.0,
-            child: Column(children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image(image: AssetImage(x.image), fit: BoxFit.scaleDown),
-              ),
-              Text(x.name,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 8,
-                    fontWeight: FontWeight.bold,
-                  )),
-            ]),
-          )));
+      imgs.add(
+          Expanded(
+            child: Card(
+              elevation: 2.0,
+              child: Column(children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child:
+                  Image(image: AssetImage(x.image),
+                      width:160,
+                      fit: BoxFit.fitWidth
+                  ),
+                ),
+                Text(x.name,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    )),
+              ]),
+            )
+          )
+      );
     }
 
     return Row(
-      mainAxisSize: MainAxisSize.max,
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: imgs,
     );
   }
+  getGiftsImagesInGrid() {
+    List<Card> imgs = [];
+    for (final x in this.gifts) {
+      imgs.add(
+        Card(
+            elevation: 8.0,
+            borderOnForeground: false,
+            child:  Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Image(image: AssetImage(x.image),
+                          fit: BoxFit.scaleDown),
+                    ),
+                    Text(
+                        x.name,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold
+                        )
+                    ),
+                  ])
+            )
+      );
+    }
+    return GridView.count(
+      primary: true,
+      padding: const EdgeInsets.all(8.0),
+      crossAxisCount: 4,
+      childAspectRatio: 0.85,
+      mainAxisSpacing: 1.0,
+      crossAxisSpacing: 1.0,
+      children: imgs,
+    );
+  }
+
 }

@@ -4,16 +4,30 @@ class OrderStatus{
 
   OrderStatus(this.status, this.updated);
 
-  factory OrderStatus.fromJson(Map<String, dynamic> json) {
+  static fromJson(Map<String, dynamic> json) {
     DateTime updated = DateTime.parse(json['updated']);
     return OrderStatus(
-        json['status'] as StatusEnum,
+        parseStatusEnum(json['status']),
         updated
     );
   }
 
+  static List<OrderStatus> allFromJson(List<dynamic> jsonList) {
+    List<OrderStatus> rslt = [];
+    for (final val in jsonList) {
+      rslt.add(OrderStatus.fromJson(val));
+    }
+    return rslt;
+  }
+
   static StatusEnum parseStatusEnum(String status){
-    return StatusEnum.values.firstWhere((e) => e.toString() == status);
+    List<StatusEnum> values = StatusEnum.values;
+    for (final e in values) {
+      if (e.toString().toLowerCase() == ( "StatusEnum." + status).toLowerCase()){
+        return e;
+      }
+    }
+    return null;
   }
   Map<String, dynamic> toJson() =>
       {
