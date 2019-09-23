@@ -60,14 +60,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List<OrderModel>> _fetchData() async {
-    final response = await http.get("http://" + HomeScreen.backendServerAddress
-        + ":" + HomeScreen.backendServerPort.toString() +"/orders");
-    if (response.statusCode == 200) {
-      return OrderModel.getAllfromJson(response.body);
-    } else {
-      // If that call was not successful, throw an error.
-      throw Exception('Failed to load post');
-    }
+//     final response = await http.get("http://" + HomeScreen.backendServerAddress
+//        + ":" + HomeScreen.backendServerPort.toString() +"/orders");
+//    if (response.statusCode == 200) {
+//      return OrderModel.getAllfromJson(response.body);
+//    } else {
+//      // If that call was not successful, throw an error.
+//      throw Exception('Failed to load post');
+//    }
+    return refreshDataOrders("");
   }
 
   List<OrderModel> refreshDataOrders(String body) {
