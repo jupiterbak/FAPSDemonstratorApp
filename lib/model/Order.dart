@@ -50,10 +50,12 @@ class OrderModel {
   }
 
   Map<String, dynamic> toJson() => {
-    'created': created,
-    'updated': updated,
-    'lastStatusUpdate': lastStatusUpdate,
-    'currentOrderStatus': currentOrderStatus,
+    'created': created.toString(),
+    'updated': updated.toString(),
+    'lastStatusUpdate': lastStatusUpdate.toString(),
+    'currentOrderStatus': {
+      "status": currentOrderStatus.toString().replaceAll("StatusEnum.", "")
+    },
     'OrderID': OrderID,
     'OrderOwner': OrderOwner,
     'statusHistory': statusHistory,

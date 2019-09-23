@@ -1,9 +1,17 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+
 import 'package:faps_demonstrator_customer_app/model/Order.dart';
+import 'package:faps_demonstrator_customer_app/model/OrderStatus.dart';
 import 'package:faps_demonstrator_customer_app/model/gift.dart';
 import 'package:flutter/material.dart';
 
+import 'HomeScreen.dart';
+
 class NewOrderScreen extends StatefulWidget {
   static const String routeName = "/addOrder";
+
 
   @override
   _NewOrderScreenState createState() => _NewOrderScreenState();
@@ -12,6 +20,7 @@ class NewOrderScreen extends StatefulWidget {
 class _NewOrderScreenState extends State<NewOrderScreen> {
   List<Gift> selectedGifts = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  String last_json_request = "";
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +45,72 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
         onTap: (index){
           if (index == 0){
             Navigator.pop(context);
+          }else if (index == 1){
+            // Get all the gifts that have been selected
+
+            // Submit Btn
+            OrderModel model = new OrderModel(
+                DateTime.now(),
+                DateTime.now(),
+                DateTime.now(),
+                StatusEnum.CREATED,
+                "",
+                "OrderOwner",
+                [new OrderStatus(StatusEnum.CREATED, DateTime.now())],
+                this.selectedGifts
+            );
+
+            postData(model.toJson()).then((resp){
+              String msg = "";
+              if (resp == 200) {
+                msg = "Order posted sucessfully.";
+              }else if (resp == -1){
+                msg=  'Order has already been submitted!' ;
+              }
+              else {
+                // If that call was not successful, throw an error.
+                msg=  'Failed to post the data. Status code: ' + resp.toString() ;
+              }
+              final snackBar = SnackBar(
+                backgroundColor: resp!=200? Colors.red.withOpacity(0.8): Colors.black.withOpacity(0.5),
+                content: Text(msg,),
+                action: SnackBarAction(
+                  label: 'OK',
+                  onPressed: () {
+
+                    Navigator.pop(context);
+                  },
+                ),
+                duration: Duration(seconds: 1),
+              );
+              debugPrint(msg);
+              _scaffoldKey.currentState.showSnackBar(snackBar);
+            });
+
           }
           debugPrint("You selected on menu $index");
         },
       ),
     );
+  }
+
+
+  Future<int> postData(Map<String, dynamic> jsonMap) async {
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(
+        Uri.parse("http://" + HomeScreen.backendServerAddress
+        + ":" + HomeScreen.backendServerPort.toString() +"/orders"));
+    request.headers.set('content-type', 'application/json');
+    String msg  = json.encode(jsonMap);
+    if(msg.toLowerCase() != this.last_json_request.toLowerCase()){
+      request.add(utf8.encode(json.encode(jsonMap)));
+      final HttpClientResponse response = await request.close();
+      return response.statusCode;
+    }else{
+      return -1;
+    }
+
+    // return refreshDataOrders("");
   }
 
   Widget getGridView( BuildContext context) {

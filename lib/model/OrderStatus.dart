@@ -31,8 +31,8 @@ class OrderStatus{
   }
   Map<String, dynamic> toJson() =>
       {
-        'status': status,
-        'updated': updated,
+        'status': status.toString().replaceAll("StatusEnum.", ""),
+        'updated': updated.toString(),
       };
 }
 

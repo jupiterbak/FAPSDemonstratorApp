@@ -12,8 +12,8 @@ import 'package:faps_demonstrator_customer_app/views/NewOrderScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/HomeScreen';
-  static const String backendServerAddress = "kain.faps.uni-erlangen.de";
-  static const int backendServerPort = 8080;
+  static const String backendServerAddress = "192.168.99.100";
+  static const int backendServerPort = 3000;
 
   HomeScreen({Key key, this.title}) : super(key: key);
 
@@ -60,15 +60,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List<OrderModel>> _fetchData() async {
-//     final response = await http.get("http://" + HomeScreen.backendServerAddress
-//        + ":" + HomeScreen.backendServerPort.toString() +"/orders");
-//    if (response.statusCode == 200) {
-//      return OrderModel.getAllfromJson(response.body);
-//    } else {
-//      // If that call was not successful, throw an error.
-//      throw Exception('Failed to load post');
-//    }
-    return refreshDataOrders("");
+     final response = await http.get("http://" + HomeScreen.backendServerAddress
+        + ":" + HomeScreen.backendServerPort.toString() +"/orders");
+    if (response.statusCode == 200) {
+      return OrderModel.getAllfromJson(response.body);
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception('Failed to load post');
+    }
+    // return refreshDataOrders("");
   }
 
   List<OrderModel> refreshDataOrders(String body) {
