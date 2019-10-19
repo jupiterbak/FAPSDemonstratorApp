@@ -54,13 +54,9 @@ class MyGridView {
       mainAxisSpacing: 1.0,
       crossAxisSpacing: 1.0,
       children: <Widget>[
-        getStructuredGridCell("FAU Gummy Bears", "assets/images/Haribo.jpg", context),
-        getStructuredGridCell("FAU M&Ms", "assets/images/M&Ms.jpg", context),
-        getStructuredGridCell("FAU Rubber Eraser", "assets/images/RadierGummi.jpg", context),
-        getStructuredGridCell("FAU Biscuits", "assets/images/leibniz_keks.jpg", context),
-        getStructuredGridCell("FAU USB-Sticks", "assets/images/USB.jpg", context),
-        getStructuredGridCell("FAU Mentos Bonbons", "assets/images/Mentos_Neu.jpeg", context),
-        getStructuredGridCell("Post-It", "assets/images/Post_it.jpg", context),
+        getStructuredGridCell("FAU Haribo", "assets/images/Haribo.jpg", context),
+        getStructuredGridCell("FAU Choco Munze", "assets/images/ritter-sport-kokos-100g.jpg", context),
+        getStructuredGridCell("FAU Hanuta", "assets/images/hanuta.png", context),
         getStructuredGridCell("FAU Surprise", "assets/images/FAU_blue.jpg", context),
       ],
     );
