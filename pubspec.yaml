@@ -52,6 +52,9 @@ flutter:
     - assets/images/USB.jpg
     - assets/images/Mentos_Neu.jpeg
     - assets/images/FAU_blue.jpg
+    - assets/images/goldmuenzen_aus_schokolade.jpg
+    - assets/images/hanuta.png
+    - assets/images/ritter-sport-kokos-100g.jpg
 
   fonts:
     - family: Raleway
