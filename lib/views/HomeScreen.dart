@@ -12,7 +12,7 @@ import 'package:faps_demonstrator_customer_app/views/NewOrderScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/HomeScreen';
-  static const String backendServerAddress = "192.168.99.100";
+  static const String backendServerAddress = "cloud.faps.uni-erlangen.de";
   static const int backendServerPort = 3000;
 
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -71,58 +71,58 @@ class _HomeScreenState extends State<HomeScreen> {
     // return refreshDataOrders("");
   }
 
-  List<OrderModel> refreshDataOrders(String body) {
-    return [
-      new OrderModel(
-          DateTime.now(),
-          DateTime.now(),
-          DateTime.now(),
-          StatusEnum.CREATED,
-          randomAlphaNumeric(10),
-          "jupiter.bakakeu@faps.de", [], [
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-      ]),
-      new OrderModel(
-          DateTime.now(),
-          DateTime.now(),
-          DateTime.now(),
-          StatusEnum.CREATED,
-          randomAlphaNumeric(10),
-          "jupiter.bakakeu@faps.de", [], [
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-      ]),
-      new OrderModel(
-          DateTime.now(),
-          DateTime.now(),
-          DateTime.now(),
-          StatusEnum.CREATED,
-          randomAlphaNumeric(10),
-          "jupiter.bakakeu@faps.de", [], [
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-      ]),
-      new OrderModel(
-          DateTime.now(),
-          DateTime.now(),
-          DateTime.now(),
-          StatusEnum.CREATED,
-          randomAlphaNumeric(10),
-          "jupiter.bakakeu@faps.de", [], [
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-        Gift(0, "FAU Gummy Bears", "assets/images/Haribo.jpg", 0.4, "", 0),
-      ]),
-    ];
-  }
+//  List<OrderModel> refreshDataOrders(String body) {
+//    return [
+//      new OrderModel(
+//          DateTime.now(),
+//          DateTime.now(),
+//          DateTime.now(),
+//          StatusEnum.CREATED,
+//          randomAlphaNumeric(10),
+//          "jupiter.bakakeu@faps.de", [], [
+//        Gift(0, "FAU Gummy Bears", "faps", "assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps", "assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//      ]),
+//      new OrderModel(
+//          DateTime.now(),
+//          DateTime.now(),
+//          DateTime.now(),
+//          StatusEnum.CREATED,
+//          randomAlphaNumeric(10),
+//          "jupiter.bakakeu@faps.de", [], [
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//      ]),
+//      new OrderModel(
+//          DateTime.now(),
+//          DateTime.now(),
+//          DateTime.now(),
+//          StatusEnum.CREATED,
+//          randomAlphaNumeric(10),
+//          "jupiter.bakakeu@faps.de", [], [
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//      ]),
+//      new OrderModel(
+//          DateTime.now(),
+//          DateTime.now(),
+//          DateTime.now(),
+//          StatusEnum.CREATED,
+//          randomAlphaNumeric(10),
+//          "jupiter.bakakeu@faps.de", [], [
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//        Gift(0, "FAU Gummy Bears", "faps","assets/images/Haribo.jpg", 0.4, "", 0),
+//      ]),
+//    ];
+//  }
 
   @override
   void dispose() {

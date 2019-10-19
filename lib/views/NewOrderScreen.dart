@@ -71,20 +71,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                 // If that call was not successful, throw an error.
                 msg=  'Failed to post the data. Status code: ' + resp.toString() ;
               }
-              final snackBar = SnackBar(
-                backgroundColor: resp!=200? Colors.red.withOpacity(0.8): Colors.black.withOpacity(0.5),
-                content: Text(msg,),
-                action: SnackBarAction(
-                  label: 'OK',
-                  onPressed: () {
 
-                    Navigator.pop(context);
-                  },
-                ),
-                duration: Duration(seconds: 1),
-              );
               debugPrint(msg);
-              _scaffoldKey.currentState.showSnackBar(snackBar);
+              Navigator.pop(context);
             });
 
           }

@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Padding(
               padding: EdgeInsets.all(18.0),
               child: Text(
-                'Coyright 2018\n'
+                'Coyright 2019\n'
                     'FAU-FAPS',
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
