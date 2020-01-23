@@ -20,11 +20,11 @@ class Gift {
   );
 
   static getAllPossibleGifts() => <Gift>[
-        Gift(0, "FAU Haribo", "haribo", "assets/images/Haribo.jpg", 0.2, "", 0),
+        Gift(0, "FAU Haribo", "haribo", "assets/images/haribo-mini.jpg", 0.2, "", 0),
         Gift(1, "FAU Ritter Sport", "choco","assets/images/ritter-sport-kokos-100g.jpg", 0.2, "", 0),
-        Gift(2, "FAU Choco Munze", "choco_munze","assets/images/goldmuenzen_aus_schokolade.jpg", 0.2, "",
+        Gift(2, "FAU Choco Munze", "choco_munze","assets/images/Muenzen-Schokoladen.jpg", 0.2, "",
             0),
-        Gift(3, "FAU Hanuta", "hanuta","assets/images/hanuta.png", 0.2, "", 0),
+        Gift(3, "FAU Hanuta", "hanuta","assets/images/hanuta-minis.jpg", 0.2, "", 0),
         Gift(7, "FAU Surprise", "faps", "assets/images/FAU_blue.jpg", 0.2, "", 0)
       ];
 

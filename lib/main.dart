@@ -21,9 +21,9 @@ class FAPSDemonstratorApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
         primaryTextTheme: TextTheme(
-            title: TextStyle(
-                color: Colors.white
-            ),
+          title: TextStyle(
+              color: Colors.white
+          ),
         ),
         appBarTheme: AppBarTheme(
           iconTheme: new IconThemeData(color: Colors.white),
